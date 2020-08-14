@@ -4,7 +4,9 @@ import {
   PrimaryGeneratedColumn,
   Column,
   Unique,
+  OneToMany,
 } from 'typeorm';
+import { Task } from 'src/tasks/task.entity';
 
 @Entity()
 @Unique(['userName']) // array trường nào muốn unique
@@ -20,4 +22,11 @@ export class User extends BaseEntity {
 
   @Column()
   salt: string;
+
+  @OneToMany(
+    type => Task,
+    task => task.user,
+    { eager: true },
+  )
+  tasks: Task[];
 }
