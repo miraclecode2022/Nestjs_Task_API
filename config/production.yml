@@ -1,0 +1,2 @@
+db:
+  synchronize: false # Tự tạo database mỗi khi khởi chạy ( k dùng trên production )

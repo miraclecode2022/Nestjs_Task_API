@@ -6,6 +6,9 @@ import { UserRepository } from './user.repository';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
+import * as config from 'config';
+
+const jwtConfig = config.get('jwt');
 
 @Module({
   // imports để imports các repository và inject vào service khi init service
@@ -14,9 +17,9 @@ import { JwtStrategy } from './jwt.strategy';
       defaultStrategy: 'jwt',
     }),
     JwtModule.register({
-      secret: 'GiaLongDev',
+      secret: process.env.JWT_SECRET || jwtConfig.secret,
       signOptions: {
-        expiresIn: 3600,
+        expiresIn: jwtConfig.expiresIn,
       },
     }),
     TypeOrmModule.forFeature([UserRepository]),
